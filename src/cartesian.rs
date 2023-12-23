@@ -256,6 +256,34 @@ impl<const N: usize> Cartesian<N> for Vector<N> {
     fn new(x: [i64; N]) -> Self { Self(x) }
 }
 
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
+pub enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+impl Direction {
+    pub fn opposite(&self) -> Self {
+        match self {
+            Direction::Up => Direction::Down,
+            Direction::Down => Direction::Up,
+            Direction::Left => Direction::Right,
+            Direction::Right => Direction::Left,
+        }
+    }
+
+    pub fn vector(&self) -> Vector2 {
+        match self {
+            Direction::Up => v2(0, -1),
+            Direction::Down => v2(0, 1),
+            Direction::Left => v2(-1, 0),
+            Direction::Right => v2(1, 0),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
