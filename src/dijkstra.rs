@@ -142,11 +142,11 @@ mod tests {
         graph.insert('K', vec![('L', 5)]);
         graph.insert('L', vec![]);
 
-        let (path, cost) = dijkstra(&'A', |node| graph.get(node).unwrap().clone(), |node| *node == 'L').unwrap();
+        let (path, cost) = dijkstra(['A'], |node| graph.get(node).unwrap().clone(), |node| *node == 'L').unwrap();
         assert_eq!(path, vec!['A', 'B', 'D', 'F', 'K', 'L']);
         assert_eq!(cost, 19);
 
-        let (path, cost) = dijkstra(&'C', |node| graph.get(node).unwrap().clone(), |node| *node == 'J').unwrap();
+        let (path, cost) = dijkstra(['C'], |node| graph.get(node).unwrap().clone(), |node| *node == 'J').unwrap();
         assert_eq!(path, vec!['C', 'E', 'G', 'J']);
         assert_eq!(cost, 14);
     }
