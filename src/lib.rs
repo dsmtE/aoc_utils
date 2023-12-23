@@ -1,7 +1,7 @@
 #[cfg(feature = "regex")]
 mod regex;
 
-pub mod iterator_helpers;
+pub mod iterator;
 pub mod nom_helpers;
 pub mod cartesian;
 pub mod dijkstra;
