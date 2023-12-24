@@ -31,3 +31,21 @@ impl<T> std::ops::Index<usize> for Grid<T> {
         &self.data[idx]
     }
 }
+
+pub fn in_bound_cardinal_neighbors_index(index: usize, width: usize, height: usize) -> Vec<usize> {
+    let mut cardinal_neighbors = Vec::new();
+    let (x, y) = (index % width, index / width);
+    if x > 0 {
+        cardinal_neighbors.push(index - 1);
+    }
+    if x < width - 1 {
+        cardinal_neighbors.push(index + 1);
+    }
+    if y > 0 {
+        cardinal_neighbors.push(index - width);
+    }
+    if y < height - 1 {
+        cardinal_neighbors.push(index + width);
+    }
+    cardinal_neighbors
+}
