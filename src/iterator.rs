@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 pub trait IterUtils: IntoIterator + Sized {
     fn collect_hash_set(self) -> std::collections::HashSet<Self::Item>
     where
@@ -7,6 +9,12 @@ pub trait IterUtils: IntoIterator + Sized {
     }
 
     fn collect_vec(self) -> Vec<Self::Item> {
+        self.into_iter().collect()
+    }
+    
+    fn collect_b_tree_set(self) -> BTreeSet<Self::Item> 
+    where
+        Self::Item: Ord {
         self.into_iter().collect()
     }
 
