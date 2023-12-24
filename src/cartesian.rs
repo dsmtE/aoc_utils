@@ -94,11 +94,17 @@ impl Vector<2> {
 
 impl From<char> for Vector2 {
     fn from(c: char) -> Self {
+        Direction::from(c).vector()
+    }
+}
+
+impl From<char> for Direction {
+    fn from(c: char) -> Self {
         match c {
-            '^' | 'U' | 'u' => Self::UP,
-            'v' | 'D' | 'd' => Self::DOWN,
-            '<' | 'L' | 'l' => Self::LEFT,
-            '>' | 'R' | 'r' => Self::RIGHT,
+            '^' | 'U' | 'u' => Direction::Up,
+            'v' | 'D' | 'd' => Direction::Down,
+            '<' | 'L' | 'l' => Direction::Left,
+            '>' | 'R' | 'r' => Direction::Right,
             _ => panic!("{c} is not a valid direction"),
         }
     }
