@@ -80,8 +80,8 @@ impl<const N: usize> Vector<N> {
 }
 
 impl Vector<2> {
-    pub const UP: Vector2 = Vector([0, 1]);
-    pub const DOWN: Vector2 = Vector([0, -1]);
+    pub const UP: Vector2 = Vector([0, -1]);
+    pub const DOWN: Vector2 = Vector([0, 1]);
     pub const LEFT: Vector2 = Vector([-1, 0]);
     pub const RIGHT: Vector2 = Vector([1, 0]);
 
