@@ -1,4 +1,8 @@
-#[derive(Debug, PartialEq, Eq)]
+use std::fmt::Display;
+
+use crate::cartesian::{Point2, p2, Cartesian2};
+
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Grid <T> {
     pub data: Vec<T>,
     pub width: usize,
@@ -30,6 +34,38 @@ impl<T> std::ops::Index<usize> for Grid<T> {
     fn index(&self, idx: usize) -> &T {
         &self.data[idx]
     }
+}
+
+impl<T> std::ops::Index<&Point2> for Grid<T> {
+    type Output = T;
+    fn index(&self, pos: &Point2) -> &T {
+        &self.data[pos.y() as usize * self.width + pos.x() as usize]
+    }
+}
+
+impl<T> std::ops::IndexMut<&Point2> for Grid<T> {
+    fn index_mut(&mut self, pos: &Point2) -> &mut Self::Output {
+        &mut self.data[pos.y() as usize * self.width + pos.x() as usize]
+    }
+}
+
+impl <T> Grid<T> {
+    pub fn index_to_point(&self, index: usize) -> Point2 {
+        index_to_point(index, self.width)
+    }
+    pub fn in_bound(&self, pos: &Point2) -> bool {
+        in_bound(pos, self.width, self.height)
+    }
+}
+
+pub fn index_to_point(index: usize, width: usize) -> Point2 {
+    let width = width as i64;
+    let index = index as i64;
+    p2(index % width, index / width)
+}
+
+pub fn in_bound(pos: &Point2, width: usize, height: usize) -> bool {
+    pos.x() >= 0 && pos.x() < width as i64 && pos.y() >= 0 && pos.y() < height as i64
 }
 
 pub fn in_bound_cardinal_neighbors_index(index: usize, width: usize, height: usize) -> Vec<usize> {
