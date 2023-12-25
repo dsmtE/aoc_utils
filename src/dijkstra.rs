@@ -20,7 +20,7 @@ where
     let (parents, reached) = run_dijkstra(starts, &mut successors, &mut success);
     reached.map(|target| {
         (
-            reverse_path(&parents, |(p, _)| p.clone(), target.clone()),
+            build_path(&target.clone(), &parents, |(p, _)| p.clone()),
             parents[&target].1,
         )
     })
@@ -77,24 +77,19 @@ where
     (parent, target_reached)
 }
 
-fn reverse_path<Node, V, F>(parents: &HashMap<Node, V>, mut parent: F, start: Node) -> Vec<Node>
+fn build_path<Node, V, F>(target: &Node, parents: &HashMap<Node, V>, mapping: F) -> Vec<Node>
 where
     Node: Eq + Hash + Clone,
-    F: FnMut(&V) -> Option<Node>,
+    F: Fn(&V) -> Option<Node>,
 {
-    let mut current = Some(start);
-    std::iter::from_fn(|| {
-        current.clone().and_then(|c| {
-            parents.get(&c).map(|p| {
-                current = parent(p);
-                c
-            })
-        })
-    })
-    .collect::<Vec<_>>()
-    .into_iter()
-    .rev()
-    .collect()
+    let mut reverse_path = vec![target.clone()];
+
+    while let Some(node) = parents.get(reverse_path.last().unwrap()).and_then(&mapping) {
+        reverse_path.push(node.clone());
+    }
+
+    reverse_path.reverse();
+    reverse_path
 }
 
 struct SmallestHolder<Cost, Node> {
