@@ -32,3 +32,27 @@ T: num::Integer
 {
     inner_area + boundary_points_count / (T::one() + T::one()) + T::one()
 }
+
+pub fn hash_cycles<T, K: Eq + std::hash::Hash>(
+    mut state: T,
+    mut next: impl FnMut(T) -> T,
+    mut key_fn: impl FnMut(&T) -> K,
+    count: usize,
+) -> T {
+    let mut cache: std::collections::HashMap<K, usize> = std::collections::HashMap::new();
+    for i in 0..count {
+        let key = key_fn(&state);
+        if let Some(&v) = cache.get(&key) {
+            let cycle_length = i - v;
+            let iters_left = count - i;
+            let iters_after_cycles = iters_left % cycle_length;
+            for _ in 0..iters_after_cycles {
+                state = next(state);
+            }
+            return state;
+        }
+        cache.insert(key, i);
+        state = next(state);
+    }
+    state
+}
