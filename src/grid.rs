@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 use crate::cartesian::{Point2, p2, Cartesian2};
 
 #[derive(Debug, PartialEq, Eq, Clone)]
