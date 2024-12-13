@@ -13,6 +13,10 @@ pub struct Vector<const N: usize>(pub [i64; N]);
 pub type Point2 = Point<2>;
 pub type Vector2 = Vector<2>;
 
+impl Vector2 {
+    pub const ORTHOGONAL: [Self; 4] = [v2(0, 1),v2(0, -1),v2(1, 0),v2(-1, 0)];
+}
+
 // TODO: extend to 3 dimensions
 
 // Could also be done with derive_more:{Deref, DerefMut}
@@ -57,8 +61,8 @@ impl<const N: usize> Debug for Vector<N> {
     }
 }
 
-pub fn p2(x: i64, y: i64) -> Point<2> { Point([x, y]) }
-pub fn v2(x: i64, y: i64) -> Vector<2> { Vector([x, y]) }
+pub const fn p2(x: i64, y: i64) -> Point<2> { Point([x, y]) }
+pub const fn v2(x: i64, y: i64) -> Vector<2> { Vector([x, y]) }
 
 impl<const N: usize> Point<N> {
     pub fn origin() -> Self { Self::default() }
