@@ -56,3 +56,14 @@ pub fn hash_cycles<T, K: Eq + std::hash::Hash>(
     }
     state
 }
+
+pub fn number_of_digits<T>(number: &T) -> usize 
+where T: num_traits::Num + std::cmp::PartialOrd + std::ops::DivAssign<T> + TryFrom<u8> + Copy {
+    let mut count = 0;
+    let mut number = *number;
+    while number > T::zero() {
+        number /= 10u8.try_into().ok().expect("could not convert 10 into T.");
+        count += 1;
+    }
+    count
+}
