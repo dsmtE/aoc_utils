@@ -54,6 +54,14 @@ impl <T> Grid<T> {
     pub fn in_bound(&self, pos: &Point2) -> bool {
         in_bound(pos, self.width, self.height)
     }
+
+    pub fn same_size_with<U: Copy>(&self, value: U) -> Grid<U> {
+        Grid {
+            width: self.width,
+            height: self.height,
+            data: vec![value; (self.width * self.height) as usize],
+        }
+    }
 }
 
 pub fn index_to_point(index: usize, width: usize) -> Point2 {
