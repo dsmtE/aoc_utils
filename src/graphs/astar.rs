@@ -6,7 +6,7 @@ use crate::num::constant::Zero;
 
 use super::build_path;
 
-pub fn astart<Node, Cost, FN, IN, FS, FH>(
+pub fn astar<Node, Cost, FN, IN, FS, FH>(
     starts: impl IntoIterator<Item = Node>,
     mut successors: FN,
     mut heuristic: FH,
