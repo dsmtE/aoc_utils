@@ -7,7 +7,7 @@ pub mod nom_parsing;
 pub mod cartesian;
 pub mod graphs;
 pub mod num;
-mod grid;
+pub mod grid;
 
 use itertools::Itertools;
 
