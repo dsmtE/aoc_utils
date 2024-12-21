@@ -13,7 +13,7 @@ pub fn dijkstra<Node, Cost, FN, IN, FS>(
 ) -> Option<(Vec<Node>, Cost)>
 where
     Node: Eq + Hash + Clone,
-    Cost: Zero + Ord + Copy,
+    Cost: Zero + Ord + Copy + std::ops::Add<Cost, Output = Cost>,
     FN: FnMut(&Node) -> IN,
     IN: IntoIterator<Item = (Node, Cost)>,
     FS: FnMut(&Node) -> bool,
@@ -34,7 +34,7 @@ fn run_dijkstra<Node, Cost, FN, IN, FS>(
 ) -> (HashMap<Node, (Option<Node>, Cost)>, Option<Node>)
 where
     Node: Eq + Hash + Clone,
-    Cost: Zero + Ord + Copy,
+    Cost: Zero + Ord + Copy + std::ops::Add<Cost, Output = Cost>,
     FN: FnMut(&Node) -> IN,
     IN: IntoIterator<Item = (Node, Cost)>,
     FS: FnMut(&Node) -> bool,
