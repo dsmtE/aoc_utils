@@ -5,15 +5,14 @@ pub mod iterator;
 pub mod parsing;
 pub mod nom_parsing;
 pub mod cartesian;
-pub mod dijkstra;
+pub mod graphs;
 pub mod num;
+mod grid;
 
 use itertools::Itertools;
 
 pub use aoc_utils_proc_macro::*;
 
-mod grid;
-pub use grid::*;
 use num::integer::Integer;
 
 #[macro_export]
