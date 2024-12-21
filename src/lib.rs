@@ -6,6 +6,7 @@ pub mod parsing;
 pub mod nom_parsing;
 pub mod cartesian;
 pub mod dijkstra;
+pub mod num;
 
 use itertools::Itertools;
 
@@ -13,6 +14,7 @@ pub use aoc_utils_proc_macro::*;
 
 mod grid;
 pub use grid::*;
+use num::integer::Integer;
 
 #[macro_export]
 macro_rules! get_input { () => (
@@ -28,9 +30,9 @@ pub fn shoelace_area(points: &[(i64, i64)]) -> i64 {
 // Pick's theorem using shoelace formula
 pub fn pick_area<T>(inner_area: T, boundary_points_count: T) -> T 
 where
-T: num::Integer
+T:  Integer
 {
-    inner_area + boundary_points_count / (T::one() + T::one()) + T::one()
+    inner_area + boundary_points_count / T::TWO + T::ONE
 }
 
 pub fn hash_cycles<T, K: Eq + std::hash::Hash>(
@@ -55,15 +57,4 @@ pub fn hash_cycles<T, K: Eq + std::hash::Hash>(
         state = next(state);
     }
     state
-}
-
-pub fn number_of_digits<T>(number: &T) -> usize 
-where T: num_traits::Num + std::cmp::PartialOrd + std::ops::DivAssign<T> + TryFrom<u8> + Copy {
-    let mut count = 0;
-    let mut number = *number;
-    while number > T::zero() {
-        number /= 10u8.try_into().ok().expect("could not convert 10 into T.");
-        count += 1;
-    }
-    count
 }

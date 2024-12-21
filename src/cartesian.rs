@@ -4,6 +4,8 @@ use std::{
     ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign, Neg, Deref, DerefMut},
 };
 
+use crate::num::constant::Zero;
+
 #[derive(PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 pub struct Point<const N: usize>(pub [i64; N]);
 
@@ -39,14 +41,14 @@ impl<const N: usize> DerefMut for Vector<N> {
     fn deref_mut(&mut self) -> &mut Self::Target { &mut self.0 }
 }
 
-pub trait Zero: Sized {
-    fn zero() -> Self;
+impl<const N: usize> Zero for Point<N> { 
+    const ZERO: Self = Self([0; N]);
 }
-
-impl<const N: usize> Zero for Point<N> { fn zero() -> Self { Self([0; N]) } }
 impl<const N: usize> Default for Point<N> { fn default() -> Self {  Self([0; N]) } }
 
-impl<const N: usize> Zero for Vector<N> { fn zero() -> Self { Self([0; N]) } }
+impl<const N: usize> Zero for Vector<N> { 
+    const ZERO: Self = Self([0; N]);
+}
 impl<const N: usize> Default for Vector<N> { fn default() -> Self {  Self([0; N]) } }
 
 impl<const N: usize> Debug for Point<N> {
