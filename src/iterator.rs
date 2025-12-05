@@ -27,6 +27,14 @@ pub trait IterUtils: IntoIterator + Sized {
             .collect::<Vec<String>>()
             .join(sep)
     }
+
+    fn fold_decimal(self) -> Self::Item 
+    where 
+        Self::Item: crate::num::integer::Integer,
+    {
+        use crate::num::constant::{Zero, Ten};
+        self.into_iter().fold(Self::Item::ZERO, |acc, integer| Self::Item::TEN * acc + integer)
+    }
 }
 
 impl<T: IntoIterator + Sized> IterUtils for T {}
