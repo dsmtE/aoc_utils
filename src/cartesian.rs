@@ -17,6 +17,11 @@ pub type Vector2 = Vector<2>;
 
 impl Vector2 {
     pub const ORTHOGONAL: [Self; 4] = [v2(0, 1),v2(0, -1),v2(1, 0),v2(-1, 0)];
+    pub const DIAGONAL: [Self; 4] = [v2(1, 1),v2(1, -1),v2(-1, 1),v2(-1, -1)];
+    pub const ALL_DIRECTIONS: [Self; 8] = [
+        v2(0, 1),v2(0, -1),v2(1, 0),v2(-1, 0),
+        v2(1, 1),v2(1, -1),v2(-1, 1),v2(-1, -1),
+    ];
 }
 
 // TODO: extend to 3 dimensions
