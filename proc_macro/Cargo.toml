@@ -8,3 +8,7 @@ proc-macro = true
 path = "lib.rs"
 
 [dependencies]
+
+proc-macro2 = "*"
+syn = { version = "*", features = ["full", "extra-traits"] }
+quote = "*"
